@@ -10,3 +10,14 @@ JotVocab back-end API
 + body-parser@1.18.2
 + express@4.16.2
 + mongoose@4.13.5
+
+### Files Description
+
+>##### index.js
+> Main entry point of the project
+-----------------------------------------------
+> ##### config.js
+> Storing some configurations used for MongoDB connection. mLab, Database-as-a-Service for MongoDB, is used for online MongoDB.
+> + port used
+> + secret
+> + database (for connect using a driver via the standard MongoDB URI)
