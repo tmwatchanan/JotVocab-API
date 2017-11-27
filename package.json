@@ -1,0 +1,26 @@
+{
+  "name": "jotvocab-api",
+  "version": "1.0.0",
+  "description": "CPE405 final project - JotVocab back-end API",
+  "main": "index.js",
+  "scripts": {
+    "test": "\\"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmwatchanan/JotVocab-API.git"
+  },
+  "author": "\"Watchanan Chantapakul\"",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tmwatchanan/JotVocab-API/issues"
+  },
+  "homepage": "https://github.com/tmwatchanan/JotVocab-API#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^4.13.5",
+    "morgan": "^1.9.0"
+  }
+}
