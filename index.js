@@ -8,6 +8,8 @@ var jwt = require('jsonwebtoken'); // token authentication
 
 var config = require('./config'); // global config
 
+var Users = require('./controllers/userController'); // Import User controller
+
 var port = process.env.PORT || config.port // load port config
 
 //Set up default mongoose connection
@@ -37,3 +39,6 @@ app.get('/', function (req, res) {
     res.send('Hello! The API is at http://localhost:' + port + '/api');
 });
 
+app.post('/user', function (req, res) {
+    Users.addNewUser(req, res);
+});
