@@ -3,6 +3,13 @@ var config = require('../config');
 var mongoose = require('mongoose');
 var User = require('../models/User'); // Import User model
 
+exports.getUsers = function (req, res) {
+    User.find((err, users) => { // Define what to do
+        if (err) throw err; // when query finished.
+        res.json(users); // Using respond obj to
+    }); // return users as JSON.
+};
+
 // exports.addNewUser = function (req, res) {
 //     User.findByIdAndUpdate(
 //         // info._id,

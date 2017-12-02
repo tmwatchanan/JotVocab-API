@@ -39,6 +39,10 @@ app.get('/', function (req, res) {
     res.send('Hello! The API is at http://localhost:' + port + '/api');
 });
 
+app.get('/users', function (req, res) {
+    Users.getUsers(req, res);
+});
+
 app.post('/user', function (req, res) {
     Users.addNewUser(req, res);
 });
