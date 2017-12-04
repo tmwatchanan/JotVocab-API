@@ -1,4 +1,4 @@
-var config = require('../config');
+var config = require('../configs/globalConfig');
 
 var mongoose = require('mongoose');
 var User = require('../models/User'); // Import User model

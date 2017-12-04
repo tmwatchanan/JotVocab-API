@@ -4,8 +4,9 @@ var app = express();
 const bodyParser = require('body-parser'); // handling HTML body
 var morgan = require('morgan'); // logging
 var mongoose = require('mongoose'); // Mongodb library
+var admin = require("firebase-admin");
 
-var config = require('./config'); // global config
+var config = require('./configs/globalConfig');
 
 var Users = require('./controllers/userController'); // Import User controller
 var Vocabs = require('./controllers/vocabController'); // Import User controller
@@ -16,11 +17,11 @@ app.set('port', port);
 var cors = require('cors');
 // Allow CORS
 app.use(cors());
-app.use(function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", "*");
-   res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
-   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-   next();
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 // app.set('superSecret', config.secret); // secret variable
@@ -34,6 +35,14 @@ mongoose.connect(mongoDB, {
 var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+// Firebase- Admin
+var serviceAccount = require("./configs/jotvocab-firebase-adminsdk-6anlk-954de5add9.json");
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://jotvocab.firebaseio.com"    
+});
+
 
 // use body parser so we can get info from POST and/or URL params
 app.use(bodyParser.urlencoded({
@@ -68,32 +77,32 @@ app.get('/vocabs', function (req, res) {
     Vocabs.getVocabs(req, res);
 });
 
-// app.use(function (req, res, next) {
-//     // code for token verification – continue on next slides
-//     // if token is valid, continue to the specified sensitive route
-//     // if token is NOT valid, return error message
+app.use(function (req, res, next) {
+    // code for token verification – continue on next slides
+    // if token is valid, continue to the specified sensitive route
+    // if token is NOT valid, return error message
 
-//     // read a token from body or urlencoded or header (key = x-access-token)
-//     var token = req.body.token || req.query.token || req.headers['x-access-token'];
-//     if (token) {
-//         jwt.verify(token, config.secret, function (err, decoded) {
-//             if (err) {
-//                 return res.json({
-//                     success: false,
-//                     message: 'Invalid token.'
-//                 });
-//             } else {
-//                 req.decoded = decoded; // add decoded token to request obj.
-//                 next(); // continue to the sensitive route
-//             }
-//         });
-//     } else {
-//         return res.status(403).send({
-//             success: false,
-//             message: 'No token provided.'
-//         });
-//     }
-// });
+    // read a token from body or urlencoded or header (key = x-access-token)
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    if (token) {
+        jwt.verify(token, config.secret, function (err, decoded) {
+            if (err) {
+                return res.json({
+                    success: false,
+                    message: 'Invalid token.'
+                });
+            } else {
+                req.decoded = decoded; // add decoded token to request obj.
+                next(); // continue to the sensitive route
+            }
+        });
+    } else {
+        return res.status(403).send({
+            success: false,
+            message: 'No token provided.'
+        });
+    }
+});
 
 app.get('/vocabs/:uid', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
