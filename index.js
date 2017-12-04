@@ -1,16 +1,19 @@
 var express = require('express');
 var app = express();
 
-var bodyParser = require('body-parser'); // handling HTML body
+const bodyParser = require('body-parser'); // handling HTML body
 var morgan = require('morgan'); // logging
 var mongoose = require('mongoose'); // Mongodb library
-var jwt = require('jsonwebtoken'); // token authentication
 
 var config = require('./config'); // global config
 
 var Users = require('./controllers/userController'); // Import User controller
+var Vocabs = require('./controllers/vocabController'); // Import User controller
 
 var port = process.env.PORT || config.port // load port config
+app.set('port', port);
+
+// app.set('superSecret', config.secret); // secret variable
 
 //Set up default mongoose connection
 var mongoDB = config.database;
@@ -31,7 +34,7 @@ app.use(bodyParser.json());
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 
-app.listen(port, () => {
+app.listen(app.get('port'), () => {
     console.log('Simple API started at http://localhost:' + port);
 });
 
@@ -45,4 +48,12 @@ app.get('/users', function (req, res) {
 
 app.post('/user', function (req, res) {
     Users.addNewUser(req, res);
+});
+
+app.post('/vocab', function (req, res) {
+    Vocabs.addNewWord(req, res);
+});
+
+app.get('/vocabs', function (req, res) {
+    Vocabs.getVocabs(req, res);
 });
