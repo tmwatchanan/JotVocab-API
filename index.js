@@ -73,26 +73,26 @@ app.get('/vocabs', function (req, res) {
     Vocabs.getVocabs(req, res);
 });
 
-app.use(function (req, res, next) {
-    // code for token verification – continue on next slides
-    // if token is valid, continue to the specified sensitive route
-    // if token is NOT valid, return error message
-    var IdToken = req.body.token;
-    admin.auth().verifyIdToken(IdToken)
-    .then(function(decodedToken) {
-      var uid = decodedToken.uid;
-    //   return res.json({
-    //     success: true,
-    //     message: "IdToken is successfully verified."
-    //   });
-      next(); // continue to the sensitive route
-    }).catch(function(error) { // Handle error
-      return res.status(403).send({
-        success: false,
-        message: 'No/invalid token provided.'
-      });
-    });
-});
+// app.use(function (req, res, next) {
+//     // code for token verification – continue on next slides
+//     // if token is valid, continue to the specified sensitive route
+//     // if token is NOT valid, return error message
+//     var IdToken = req.body.token;
+//     admin.auth().verifyIdToken(IdToken)
+//     .then(function(decodedToken) {
+//       var uid = decodedToken.uid;
+//     //   return res.json({
+//     //     success: true,
+//     //     message: "IdToken is successfully verified."
+//     //   });
+//       next(); // continue to the sensitive route
+//     }).catch(function(error) { // Handle error
+//       return res.status(403).send({
+//         success: false,
+//         message: 'No/invalid token provided.'
+//       });
+//     });
+// });
 
 app.post('/vocabs/:uid', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
