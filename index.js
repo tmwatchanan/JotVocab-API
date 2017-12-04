@@ -38,7 +38,8 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Firebase- Admin
-var serviceAccount = require("./configs/jotvocab-firebase-adminsdk-6anlk-954de5add9.json");
+console.log(process.env);
+var serviceAccount = JSON.parse(process.env.serviceAccount);
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://jotvocab.firebaseio.com"    
