@@ -88,3 +88,20 @@ exports.getVocabs = function (req, res) {
         res.json(vocabs); // Using respond obj to
     }); // return users as JSON.
 };
+
+exports.getVocabsByUid = function (req, res) {
+    Vocab.find({
+        uid: req.params.uid
+    }, (err, vocabs) => { // req.params.id = 101
+        if (err) throw err;
+        if (vocabs && vocabs.length != 0) // check an user's vocabs is found
+            return res.json(vocabs);
+        else
+            var errMsg = '[uid:' + req.params.uid + '] vocabs not found!';
+            return res.status(404).json({ // if not found, return
+                success: false, // an error message
+                message: errMsg,
+                err: err
+            });
+    });
+};

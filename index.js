@@ -57,4 +57,8 @@ app.post('/vocab', function (req, res) {
 app.get('/vocabs', function (req, res) {
     Vocabs.getVocabs(req, res);
 });
+
+app.get('/vocabs/:uid', function (req, res) {
+    Vocabs.getVocabsByUid(req, res);
+})
  
