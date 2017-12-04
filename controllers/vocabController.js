@@ -21,21 +21,6 @@ exports.addNewWord = function (req, res) {
                     words: []
                 }
             );
-            // Vocab.create(
-            //     {
-            //         for_user: req.user._id,
-            //         title: req.body[i].title,
-            //         artist: req.body[i].artist,
-            //         artwork: req.body[i].artwork,
-            //         source: req.body[i].source,
-            //         stream: req.body[i].stream
-            //     }, function (err, createdItem) {
-            //         if (err) {
-            //             console.log("MongoDB Error: " + err);
-            //             return null; // or callback
-            //         }
-            //     }
-            // );
         }
         else {
             console.log("Found one tracksTable item: " + vocabItem.for_user);
@@ -43,7 +28,8 @@ exports.addNewWord = function (req, res) {
         }
         var newWord = {
             word: req.body.word,
-            comment: req.body.comment
+            comment: req.body.comment,
+            timestamp: Date.now()
         };
         Vocab.update({ uid: req.body.uid }, {
             $push: {
@@ -98,10 +84,10 @@ exports.getVocabsByUid = function (req, res) {
             return res.json(vocabs);
         else
             var errMsg = '[uid:' + req.params.uid + '] vocabs not found!';
-            return res.status(404).json({ // if not found, return
-                success: false, // an error message
-                message: errMsg,
-                err: err
-            });
+        return res.status(404).json({ // if not found, return
+            success: false, // an error message
+            message: errMsg,
+            err: err
+        });
     });
 };
