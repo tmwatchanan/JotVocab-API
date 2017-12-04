@@ -14,16 +14,16 @@ var Vocabs = require('./controllers/vocabController'); // Import User controller
 var port = process.env.PORT || config.port // load port config
 app.set('port', port);
 
-// var cors = require('cors');
-// // Allow CORS
-// app.use(cors());
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", '*');
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-//     next();
-// });
+var cors = require('cors');
+// Allow CORS
+app.use(cors());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    next();
+});
 
 // app.set('superSecret', config.secret); // secret variable
 
@@ -73,26 +73,26 @@ app.get('/vocabs', function (req, res) {
     Vocabs.getVocabs(req, res);
 });
 
-// app.use(function (req, res, next) {
-//     // code for token verification – continue on next slides
-//     // if token is valid, continue to the specified sensitive route
-//     // if token is NOT valid, return error message
-//     var IdToken = req.body.token;
-//     admin.auth().verifyIdToken(IdToken)
-//     .then(function(decodedToken) {
-//       var uid = decodedToken.uid;
-//     //   return res.json({
-//     //     success: true,
-//     //     message: "IdToken is successfully verified."
-//     //   });
-//       next(); // continue to the sensitive route
-//     }).catch(function(error) { // Handle error
-//       return res.status(403).send({
-//         success: false,
-//         message: 'No/invalid token provided.'
-//       });
-//     });
-// });
+app.use(function (req, res, next) {
+    // code for token verification – continue on next slides
+    // if token is valid, continue to the specified sensitive route
+    // if token is NOT valid, return error message
+    var IdToken = req.body.token;
+    admin.auth().verifyIdToken(IdToken)
+    .then(function(decodedToken) {
+      var uid = decodedToken.uid;
+    //   return res.json({
+    //     success: true,
+    //     message: "IdToken is successfully verified."
+    //   });
+      next(); // continue to the sensitive route
+    }).catch(function(error) { // Handle error
+      return res.status(403).send({
+        success: false,
+        message: 'No/invalid token provided.'
+      });
+    });
+});
 
 app.post('/vocabs/:uid', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
