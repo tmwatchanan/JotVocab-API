@@ -13,6 +13,16 @@ var Vocabs = require('./controllers/vocabController'); // Import User controller
 var port = process.env.PORT || config.port // load port config
 app.set('port', port);
 
+var cors = require('cors');
+// Allow CORS
+app.use(cors());
+app.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   next();
+});
+
 // app.set('superSecret', config.secret); // secret variable
 
 //Set up default mongoose connection
@@ -58,7 +68,33 @@ app.get('/vocabs', function (req, res) {
     Vocabs.getVocabs(req, res);
 });
 
+// app.use(function (req, res, next) {
+//     // code for token verification – continue on next slides
+//     // if token is valid, continue to the specified sensitive route
+//     // if token is NOT valid, return error message
+
+//     // read a token from body or urlencoded or header (key = x-access-token)
+//     var token = req.body.token || req.query.token || req.headers['x-access-token'];
+//     if (token) {
+//         jwt.verify(token, config.secret, function (err, decoded) {
+//             if (err) {
+//                 return res.json({
+//                     success: false,
+//                     message: 'Invalid token.'
+//                 });
+//             } else {
+//                 req.decoded = decoded; // add decoded token to request obj.
+//                 next(); // continue to the sensitive route
+//             }
+//         });
+//     } else {
+//         return res.status(403).send({
+//             success: false,
+//             message: 'No token provided.'
+//         });
+//     }
+// });
+
 app.get('/vocabs/:uid', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
 })
- 

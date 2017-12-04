@@ -1,5 +1,5 @@
 module.exports = {
-    'port': 8080,
+    'port': 8888,
     'secret': 'jotvocabbackendapiforcpe405finalproject',
     'database': 'mongodb://watchanan:watchananchantapakul@ds011409.mlab.com:11409/jot-vocab'
 }
