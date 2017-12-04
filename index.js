@@ -14,16 +14,16 @@ var Vocabs = require('./controllers/vocabController'); // Import User controller
 var port = process.env.PORT || config.port // load port config
 app.set('port', port);
 
-var cors = require('cors');
-// Allow CORS
-app.use(cors());
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-    next();
-});
+// var cors = require('cors');
+// // Allow CORS
+// app.use(cors());
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", '*');
+//     res.header("Access-Control-Allow-Credentials", true);
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+//     next();
+// });
 
 // app.set('superSecret', config.secret); // secret variable
 
