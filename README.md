@@ -1,6 +1,12 @@
 # JotVocab-API
 JotVocab back-end API
 
+#### Endpoints
+You can try to send a request to https://jotvocab-api.herokuapp.com/ deployed to Heroku.
+
+>+ <ins>GET</ins> [/vocabs](https://jotvocab-api.herokuapp.com/vocabs) - to retrieve all vocabularies from all users
+>+ <ins>POST</ins> [/vocab](https://jotvocab-api.herokuapp.com/vocab) - to append a new word the user's vocab list
+
 #### Related Global Packages
 + nodemon@1.12.1
 
