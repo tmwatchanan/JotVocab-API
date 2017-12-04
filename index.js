@@ -43,7 +43,6 @@ admin.initializeApp({
     databaseURL: "https://jotvocab.firebaseio.com"    
 });
 
-
 // use body parser so we can get info from POST and/or URL params
 app.use(bodyParser.urlencoded({
     extended: false
@@ -69,10 +68,6 @@ app.post('/user', function (req, res) {
     Users.addNewUser(req, res);
 });
 
-app.post('/vocab', function (req, res) {
-    Vocabs.addNewWord(req, res);
-});
-
 app.get('/vocabs', function (req, res) {
     Vocabs.getVocabs(req, res);
 });
@@ -81,29 +76,27 @@ app.use(function (req, res, next) {
     // code for token verification – continue on next slides
     // if token is valid, continue to the specified sensitive route
     // if token is NOT valid, return error message
-
-    // read a token from body or urlencoded or header (key = x-access-token)
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    if (token) {
-        jwt.verify(token, config.secret, function (err, decoded) {
-            if (err) {
-                return res.json({
-                    success: false,
-                    message: 'Invalid token.'
-                });
-            } else {
-                req.decoded = decoded; // add decoded token to request obj.
-                next(); // continue to the sensitive route
-            }
-        });
-    } else {
-        return res.status(403).send({
-            success: false,
-            message: 'No token provided.'
-        });
-    }
+    var IdToken = req.body.token;
+    admin.auth().verifyIdToken(IdToken)
+    .then(function(decodedToken) {
+      var uid = decodedToken.uid;
+    //   return res.json({
+    //     success: true,
+    //     message: "IdToken is successfully verified."
+    //   });
+      next(); // continue to the sensitive route
+    }).catch(function(error) { // Handle error
+      return res.status(403).send({
+        success: false,
+        message: 'No/invalid token provided.'
+      });
+    });
 });
 
-app.get('/vocabs/:uid', function (req, res) {
+app.post('/vocabs/:uid', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
 })
+
+app.post('/vocab', function (req, res) {
+    Vocabs.addNewWord(req, res);
+});
