@@ -57,3 +57,4 @@ app.post('/vocab', function (req, res) {
 app.get('/vocabs', function (req, res) {
     Vocabs.getVocabs(req, res);
 });
+ 

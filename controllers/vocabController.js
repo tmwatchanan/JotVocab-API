@@ -4,10 +4,10 @@ var mongoose = require('mongoose');
 var Vocab = require('../models/Vocab'); // Import Vocab model
 
 exports.addNewWord = function (req, res) {
-    console.log("req.body=" + JSON.stringify(req.body));
-    console.log("req.body.uid=" + req.body.uid);
-    console.log("req.body.word=" + req.body.word);
-    console.log("req.body.comment=" + req.body.comment);
+    // console.log("req.body=" + JSON.stringify(req.body));
+    // console.log("req.body.uid=" + req.body.uid);
+    // console.log("req.body.word=" + req.body.word);
+    // console.log("req.body.comment=" + req.body.comment);
     Vocab.findOne({ uid: req.body.uid }, function (err, vocabItem) {
         if (err) {
             console.log("MongoDB Error: " + err);
@@ -52,13 +52,35 @@ exports.addNewWord = function (req, res) {
         }, { upsert: true }, function (err) {
             if (err) {
                 console.log(err);
+                return res.status(401).json({
+                    success: false,
+                    message: err
+                });
             } else {
                 console.log("Successfully added");
+                var sucessMsg = '[uid:] added word \'' + req.body.word + '\' successfully.';
+                res.json({
+                    success: true,
+                    message: sucessMsg,
+                    wordComment: req.body.comment
+                });
             }
         });
         return true; // or callback
     });
 };
+
+// exports.addNewWord = function (req, res) {
+//     User.findByIdAndUpdate(
+//         // info._id,
+//         req.body.uid,
+//         { $push: { "words": { word: req.body.word, comment: req.body.comment } } },
+//         { safe: true, upsert: true, new: true },
+//         function (err, model) {
+//             console.log(err);
+//         }
+//     );
+// };
 
 exports.getVocabs = function (req, res) {
     Vocab.find((err, vocabs) => { // Define what to do
