@@ -10,6 +10,7 @@ var config = require('./configs/globalConfig');
 
 var Users = require('./controllers/userController'); // Import User controller
 var Vocabs = require('./controllers/vocabController'); // Import User controller
+var Thaidict = require('./controllers/thaidictController'); // Import thaidict controller
 
 var port = process.env.PORT || config.port // load port config
 app.set('port', port);
@@ -38,7 +39,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // Firebase- Admin
-console.log(process.env);
+// console.log(process.env);
 var serviceAccount = JSON.parse(process.env.serviceAccount);
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -72,6 +73,11 @@ app.post('/user', function (req, res) {
 
 app.get('/vocabs', function (req, res) {
     Vocabs.getVocabs(req, res);
+});
+
+// node-thaidict
+app.get('/thaidict/', function (req, res) {
+    Thaidict.getThai(req, res);
 });
 
 // app.use(function (req, res, next) {
