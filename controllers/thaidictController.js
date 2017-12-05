@@ -4,5 +4,5 @@ var thaidict = require("thaidict");
 thaidict.init();
 
 exports.getThai = function (req, res) {
-    res.json(thaidict.search("computer"));
+    res.json(thaidict.search(req.params.enWord));
 };

@@ -18,7 +18,7 @@ app.set('port', port);
 var cors = require('cors');
 // Allow CORS
 app.use(cors());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", '*');
     res.header("Access-Control-Allow-Credentials", true);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -43,7 +43,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 var serviceAccount = JSON.parse(process.env.serviceAccount);
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://jotvocab.firebaseio.com"    
+    databaseURL: "https://jotvocab.firebaseio.com"
 });
 
 // use body parser so we can get info from POST and/or URL params
@@ -76,7 +76,7 @@ app.get('/vocabs', function (req, res) {
 });
 
 // node-thaidict
-app.get('/thaidict/', function (req, res) {
+app.get('/thaidict/:enWord', function (req, res) {
     Thaidict.getThai(req, res);
 });
 
