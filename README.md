@@ -1,5 +1,5 @@
 # JotVocab-API
-JotVocab back-end API
+The JotVocab back-end API, deployed at http://jotvocab-api.herokuapp.com. The front-end one is deployed at https://tmwatchanan.github.io/JotVocab/.
 
 #### Endpoints
 You can try to send a request to https://jotvocab-api.herokuapp.com/ deployed to Heroku.
