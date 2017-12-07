@@ -14,10 +14,13 @@ exports.addNewWord = function (req, res) {
     Vocab.findOne({ uid: uid }, function (err, userObject) {
         if (err) {
             console.log("MongoDB Error: " + err);
-            return false; // or callback
+            return res.status(401).json({
+                err: err
+            });
+            // return false; // or callback
         }
         if (!userObject) {
-            console.log("No item found, creating a new userObject");
+            // console.log("No item found, creating a new userObject");
             Vocab.create(
                 {
                     uid: uid,
@@ -27,17 +30,16 @@ exports.addNewWord = function (req, res) {
         }
         else {
             // Check uniqueness of word & definition
-            userObject.words.forEach(eachWord => {
-                if (eachWord.word.localeCompare(newWord.word) && eachWord.definition.localeCompare(newWord.definition)) {
-                    return res.status(401).json({
-                        success: false,
-                        newWord: newWord.word,
-                        newDefinition: newWord.definition,
-                        message: 'This word and defintion is ALREADY found in your vocabulary list!'
-                    });
-                }
-            });
-
+            // userObject.words.forEach(eachWord => {
+            //     if (eachWord.word == newWord.word && eachWord.definition == newWord.definition) {
+            //         return res.status(401).json({
+            //             success: false,
+            //             newWord: newWord.word,
+            //             newDefinition: newWord.definition,
+            //             message: 'This word and defintion is ALREADY found in your vocabulary list!'
+            //         });
+            //     }
+            // });
         }
         Vocab.update({ uid: uid }, {
             $push: {
@@ -53,7 +55,7 @@ exports.addNewWord = function (req, res) {
             } else {
                 console.log("Successfully added");
                 var sucessMsg = '[uid:' + uid + '] added word \'' + req.body.word + '\' successfully.';
-                res.json({
+                return res.json({
                     success: true,
                     message: sucessMsg,
                     wordComment: req.body.comment
