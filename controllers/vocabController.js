@@ -79,16 +79,38 @@ exports.getVocabs = function (req, res) {
 exports.getVocabsByUid = function (req, res) {
     Vocab.find({
         uid: req.params.uid
-    }, (err, vocabs) => { // req.params.id = 101
-        if (err) throw err;
-        if (vocabs && vocabs.length != 0) // check an user's vocabs is found
-            return res.json(vocabs);
-        else
+    }, (err, vocabs) => {
+        // if (err) throw err;
+        if (err) {
             var errMsg = '[uid:' + req.params.uid + '] vocabs not found!';
-        return res.status(404).json({ // if not found, return
-            success: false, // an error message
-            message: errMsg,
-            err: err
-        });
+            return res.status(404).json({ // if not found, return
+                success: false, // an error message
+                message: errMsg,
+                err: err
+            });
+            if (vocabs && vocabs.length != 0) { // check an user's vocabs is found
+                return res.json(vocabs);
+            }
+        }
     });
 };
+
+exports.deleteVocabByUid = function (req, res) {
+    Vocab.update({ uid: req.body.uid }, { "$pull": { "words": { "word": req.body.word } }}, { safe: true, multi:true }, function(err, vocab) {
+        if (err) {
+            var errMsg = '[uid:' + req.params.uid + '] deletion ERROR!';
+            return res.status(404).json({ // if not found, return
+                success: false, // an error message
+                message: errMsg,
+                err: err
+            });
+        } else {
+            var successfulMessage = 'The user id:' + req.params.id + '\'s vocab has been DELETED';
+            return res.json({
+                success: true,
+                message: successfulMessage,
+                vocab: vocab
+            });
+        }
+    });
+}
