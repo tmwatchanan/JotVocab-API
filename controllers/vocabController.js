@@ -66,11 +66,11 @@ exports.getVocabs = function (req, res) {
 
 exports.getVocabsByUid = function (req, res) {
     Vocab.find({
-        uid: req.uid
+        uid: req.locals.uid
     }, (err, vocabs) => {
         // if (err) throw err;
         if (err) {
-            var errMsg = '[uid:' + req.uid + '] vocabs not found!';
+            var errMsg = '[uid:' + req.locals.uid + '] vocabs not found!';
             return res.status(404).json({ // if not found, return
                 success: false, // an error message
                 message: errMsg,

@@ -92,7 +92,7 @@ app.use(function (req, res, next) {
     //     success: true,
     //     message: "IdToken is successfully verified."
     //   });
-      req.uid = uid;
+      req.locals.uid = uid;
       next(); // continue to the sensitive route
     }).catch(function(err) { // Handle error
       return res.status(403).send({
