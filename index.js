@@ -118,3 +118,7 @@ app.delete('/vocab/user/delete', function (req, res) {
 app.post('/vocab/user/random', function (req, res) {
     Vocabs.randomVocabByUid(req, res);
 });
+
+app.put('/vocab/user/edit', function (req, res) {
+    Vocabs.editVocabByUid(req, res);
+});

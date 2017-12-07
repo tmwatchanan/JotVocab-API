@@ -143,3 +143,30 @@ exports.randomVocabByUid = function (req, res) {
         }
     });
 }
+
+exports.editVocabByUid = function (req, res) {
+    var uid = res.locals.uid;
+    Vocab.update(
+        { uid: uid, 'words.word': req.body.word, 'words.definition': req.body.definition }, 
+        {'$set': {
+            'words.$.comment': req.body.comment
+        }},
+        function(err, editedWord) {
+            if (err) {
+                var errMsg = '[uid:' + uid + '] editing \'' + req.body.word + '\' ERROR!';
+                return res.status(404).json({ // if not found, return
+                    success: false, // an error message
+                    message: errMsg,
+                    err: err
+                });
+            } else {
+                var successfulMessage = '[uid:' + uid + '] editing \'' + req.body.word + '\' (' + req.body.definition  + ') -> edit comment SUCCESSFUL';
+                return res.json({
+                    success: true,
+                    message: successfulMessage,
+                    // editedWord: editedWord
+                });
+            }
+        }
+    );
+}
