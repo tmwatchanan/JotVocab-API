@@ -11,7 +11,9 @@ You can try to send a request to https://jotvocab-api.herokuapp.com/ deployed to
 >   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/list* with *token* in the request body
 >+ **<ins>POST</ins>** [/vocab/user/add](https://jotvocab-api.herokuapp.com/vocab/user/add) - to append a new word (you want to add) the user's vocab list
 >   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/add* with *token*, *word* and *definition* in the request body
->+ **<ins>DELETE</ins>** [/vocab/user/delete](https://jotvocab-api.herokuapp.com/vocab/user/delete) - to append a new word the user's vocab list
+>+ **<ins>PUT</ins>** [/vocab/user/edit](https://jotvocab-api.herokuapp.com/vocab/user/edit) - to edit the word in the user's vocab list
+>   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/edit* with *token*, *word*, its *definition* and new *comment* (you want to edit) in the request body
+>+ **<ins>DELETE</ins>** [/vocab/user/delete](https://jotvocab-api.herokuapp.com/vocab/user/delete) - to delete the word in the user's vocab list
 >   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/delete* with *token*, *word* and its *definition* (you want to delete) in the request body
 >+ **<ins>POST</ins>** [/vocab/user/random](https://jotvocab-api.herokuapp.com/vocab/user/random) - to randomly select a word from the user's vocab list
 >   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/random* with *token* in the request body
