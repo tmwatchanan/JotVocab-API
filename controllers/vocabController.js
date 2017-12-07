@@ -5,17 +5,19 @@ var Vocab = require('../models/Vocab'); // Import Vocab model
 
 exports.addNewWord = function (req, res) {
     var uid = res.locals.uid;
-    // console.log("req.body=" + JSON.stringify(req.body));
-    // console.log("req.body.uid=" + req.body.uid);
-    // console.log("req.body.word=" + req.body.word);
-    // console.log("req.body.comment=" + req.body.comment);
-    Vocab.findOne({ uid: uid }, function (err, vocabItem) {
+    var newWord = {
+        word: req.body.word,
+        definition: req.body.definition,
+        comment: req.body.comment,
+        timestamp: Date.now()
+    };
+    Vocab.findOne({ uid: uid }, function (err, userObject) {
         if (err) {
             console.log("MongoDB Error: " + err);
             return false; // or callback
         }
-        if (!vocabItem) {
-            console.log("No item found, creating vocabItem item");
+        if (!userObject) {
+            console.log("No item found, creating a new userObject");
             Vocab.create(
                 {
                     uid: uid,
@@ -24,15 +26,19 @@ exports.addNewWord = function (req, res) {
             );
         }
         else {
-            console.log("Found one tracksTable item: " + vocabItem.for_user);
-            // here you could even update your existing item using "tracksTable.save"
+            // Check uniqueness of word & definition
+            userObject.words.forEach(eachWord => {
+                if (eachWord.word.localeCompare(newWord.word) && eachWord.definition.localeCompare(newWord.definition)) {
+                    return res.status(401).json({
+                        success: false,
+                        newWord: newWord.word,
+                        newDefinition: newWord.definition,
+                        message: 'This word and defintion is ALREADY found in your vocabulary list!'
+                    });
+                }
+            });
+
         }
-        var newWord = {
-            word: req.body.word,
-            definition: req.body.definition,
-            comment: req.body.comment,
-            timestamp: Date.now()
-        };
         Vocab.update({ uid: uid }, {
             $push: {
                 words: newWord
