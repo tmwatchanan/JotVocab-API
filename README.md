@@ -13,6 +13,8 @@ You can try to send a request to https://jotvocab-api.herokuapp.com/ deployed to
 >   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/add* with *token*, *word* and *definition* in the request body
 >+ **<ins>DELETE</ins>** [/vocab/user/delete](https://jotvocab-api.herokuapp.com/vocab/user/delete) - to append a new word the user's vocab list
 >   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/delete* with *token* and *word* (you want to delete) in the request body
+>+ **<ins>POST</ins>** [/vocab/user/random](https://jotvocab-api.herokuapp.com/vocab/user/random) - to randomly select a word from the user's vocab list
+>   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/random* with *token* in the request body
 
 > **Thai Dictionary**
 >+ <ins>GET</ins>
