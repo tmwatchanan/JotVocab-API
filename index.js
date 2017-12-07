@@ -41,9 +41,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // Firebase- Admin
 // console.log(process.env);
 // Remote (Heroku's config vars)
-var serviceAccount = JSON.parse(process.env.serviceAccount);
+// var serviceAccount = JSON.parse(process.env.serviceAccount);
 // Local
-// var serviceAccount = require('./configs/jotvocab-firebase-adminsdk-6anlk-954de5add9.json');
+var serviceAccount = require('./configs/jotvocab-firebase-adminsdk-6anlk-954de5add9.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://jotvocab.firebaseio.com"
@@ -92,7 +92,7 @@ app.use(function (req, res, next) {
     //     success: true,
     //     message: "IdToken is successfully verified."
     //   });
-      req.locals.uid = uid;
+      res.locals.uid = uid;
       next(); // continue to the sensitive route
     }).catch(function(err) { // Handle error
       return res.status(403).send({
@@ -103,14 +103,14 @@ app.use(function (req, res, next) {
     });
 });
 
-app.post('/vocab/user', function (req, res) {
+app.post('/vocab/user/list', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
 })
 
-app.post('/vocab', function (req, res) {
+app.post('/vocab/user/add', function (req, res) {
     Vocabs.addNewWord(req, res);
 });
 
-app.delete('/vocab', function (req, res) {
+app.delete('/vocab/user/delete', function (req, res) {
     Vocabs.deleteVocabByUid(req, res);
 });

@@ -65,17 +65,19 @@ exports.getVocabs = function (req, res) {
 };
 
 exports.getVocabsByUid = function (req, res) {
+    var uid = res.locals.uid;
     Vocab.find({
-        uid: req.locals.uid
+        uid: uid
     }, (err, vocabs) => {
         // if (err) throw err;
         if (err) {
-            var errMsg = '[uid:' + req.locals.uid + '] vocabs not found!';
+            var errMsg = '[uid:' + uid + '] vocabs not found!';
             return res.status(404).json({ // if not found, return
                 success: false, // an error message
                 message: errMsg,
                 err: err
             });
+        } else {
             if (vocabs && vocabs.length != 0) { // check an user's vocabs is found
                 return res.json(vocabs);
             }
@@ -84,16 +86,18 @@ exports.getVocabsByUid = function (req, res) {
 };
 
 exports.deleteVocabByUid = function (req, res) {
-    Vocab.update({ uid: req.body.uid }, { "$pull": { "words": { "word": req.body.word } }}, { safe: true, multi:true }, function(err, vocab) {
+    var uid = res.locals.uid;
+    console.log(uid);
+    Vocab.update({ uid: uid }, { "$pull": { "words": { "word": req.body.word } }}, { safe: true, multi:true }, function(err, vocab) {
         if (err) {
-            var errMsg = '[uid:' + req.params.uid + '] deletion ERROR!';
+            var errMsg = '[uid:' + uid + '] deletion ERROR!';
             return res.status(404).json({ // if not found, return
                 success: false, // an error message
                 message: errMsg,
                 err: err
             });
         } else {
-            var successfulMessage = 'The user id:' + req.params.id + '\'s vocab has been DELETED';
+            var successfulMessage = 'The user id:' + uid + '\'s vocab has been DELETED';
             return res.json({
                 success: true,
                 message: successfulMessage,
