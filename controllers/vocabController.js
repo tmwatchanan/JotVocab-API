@@ -159,14 +159,13 @@ exports.editVocabByUid = function (req, res) {
                     message: errMsg,
                     err: err
                 });
-            } else {
-                var successfulMessage = '[uid:' + uid + '] editing \'' + req.body.word + '\' (' + req.body.definition  + ') -> edit comment SUCCESSFUL';
-                return res.json({
-                    success: true,
-                    message: successfulMessage,
-                    // editedWord: editedWord
-                });
             }
+            var successfulMessage = '[uid:' + uid + '] editing \'' + req.body.word + '\' (' + req.body.definition  + ') -> edit comment SUCCESSFUL';
+            return res.json({
+                success: true,
+                message: successfulMessage,
+                // editedWord: editedWord
+            });
         }
     );
 }
