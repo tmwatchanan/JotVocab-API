@@ -74,7 +74,7 @@ app.post('/user', function (req, res) {
     Users.addNewUser(req, res);
 });
 
-app.get('/vocabs', function (req, res) {
+app.get('/vocab/all', function (req, res) {
     Vocabs.getVocabs(req, res);
 });
 
@@ -103,14 +103,14 @@ app.use(function (req, res, next) {
     });
 });
 
-app.post('/vocabs', function (req, res) {
+app.post('/vocab/list', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
 })
 
-app.post('/vocab', function (req, res) {
+app.post('/vocab/add', function (req, res) {
     Vocabs.addNewWord(req, res);
 });
 
-app.delete('/vocab', function (req, res) {
+app.delete('/vocab/delete', function (req, res) {
     Vocabs.deleteVocabByUid(req, res);
 });
