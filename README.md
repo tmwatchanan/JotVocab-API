@@ -5,10 +5,12 @@ The JotVocab back-end API, deployed at http://jotvocab-api.herokuapp.com. The fr
 You can try to send a request to https://jotvocab-api.herokuapp.com/ deployed to Heroku.
 
 > **User's Vocabulary**
->+ <ins>GET</ins> [/vocabs](https://jotvocab-api.herokuapp.com/vocabs) - to retrieve all vocabularies from all users
->   + *for example, http://jotvocab-api.herokuapp.com/vocabs*
->+ <ins>POST</ins> [/vocab](https://jotvocab-api.herokuapp.com/vocab)/:uid - to append a new word the user's vocab list
->   + *for example, http://jotvocab-api.herokuapp.com/vocab/123456789*
+>+ <ins>GET</ins> [/vocab/all](https://jotvocab-api.herokuapp.com/vocab/all) - to retrieve all vocabularies from all users
+>   + *for example, http://jotvocab-api.herokuapp.com/vocab/all*
+>+ <ins>POST</ins> [/vocab/user/list](https://jotvocab-api.herokuapp.com/vocab/user/list)/:uid - to retrieve all saved words of the user's
+>   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/list* with *token* in the request body
+>+ <ins>POST</ins> [/vocab/user/add](https://jotvocab-api.herokuapp.com/vocab/user/add)/:uid - to append a new word the user's vocab list
+>   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/add* with *token*, *word* and *definition* in the request body
 
 > **Thai Dictionary**
 >+ <ins>GET</ins>
