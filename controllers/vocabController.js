@@ -4,11 +4,12 @@ var mongoose = require('mongoose');
 var Vocab = require('../models/Vocab'); // Import Vocab model
 
 exports.addNewWord = function (req, res) {
+    var uid = res.locals.uid;
     // console.log("req.body=" + JSON.stringify(req.body));
     // console.log("req.body.uid=" + req.body.uid);
     // console.log("req.body.word=" + req.body.word);
     // console.log("req.body.comment=" + req.body.comment);
-    Vocab.findOne({ uid: req.body.uid }, function (err, vocabItem) {
+    Vocab.findOne({ uid: uid }, function (err, vocabItem) {
         if (err) {
             console.log("MongoDB Error: " + err);
             return false; // or callback
@@ -17,7 +18,7 @@ exports.addNewWord = function (req, res) {
             console.log("No item found, creating vocabItem item");
             Vocab.create(
                 {
-                    uid: req.body.uid,
+                    uid: uid,
                     words: []
                 }
             );
@@ -32,7 +33,7 @@ exports.addNewWord = function (req, res) {
             comment: req.body.comment,
             timestamp: Date.now()
         };
-        Vocab.update({ uid: req.body.uid }, {
+        Vocab.update({ uid: uid }, {
             $push: {
                 words: newWord
             }
@@ -45,7 +46,7 @@ exports.addNewWord = function (req, res) {
                 });
             } else {
                 console.log("Successfully added");
-                var sucessMsg = '[uid:] added word \'' + req.body.word + '\' successfully.';
+                var sucessMsg = '[uid:' + uid + '] added word \'' + req.body.word + '\' successfully.';
                 res.json({
                     success: true,
                     message: sucessMsg,
