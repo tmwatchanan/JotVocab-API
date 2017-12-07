@@ -29,17 +29,23 @@ exports.addNewWord = function (req, res) {
             );
         }
         else {
+            var isDuplicated = false;
             // Check uniqueness of word & definition
-            // userObject.words.forEach(eachWord => {
-            //     if (eachWord.word == newWord.word && eachWord.definition == newWord.definition) {
-            //         return res.status(401).json({
-            //             success: false,
-            //             newWord: newWord.word,
-            //             newDefinition: newWord.definition,
-            //             message: 'This word and defintion is ALREADY found in your vocabulary list!'
-            //         });
-            //     }
-            // });
+            for (let eachWord of userObject.words) {
+                if (eachWord.word == newWord.word && eachWord.definition == newWord.definition) {
+                    isDuplicated = true;
+                    break;
+                }
+            }
+            if (isDuplicated) {
+                return res.status(401).json({
+                    duplicate: true,
+                    success: false,
+                    newWord: newWord.word,
+                    newDefinition: newWord.definition,
+                    message: 'This word and defintion is ALREADY found in your vocabulary list!'
+                });
+            }
         }
         Vocab.update({ uid: uid }, {
             $push: {
@@ -56,6 +62,7 @@ exports.addNewWord = function (req, res) {
                 console.log("Successfully added");
                 var sucessMsg = '[uid:' + uid + '] added word \'' + req.body.word + '\' successfully.';
                 return res.json({
+                    duplicate: false,
                     success: true,
                     message: sucessMsg,
                     wordComment: req.body.comment
