@@ -84,9 +84,6 @@ app.get('/thaidict/:enWord', function (req, res) {
 });
 
 app.use(function (req, res, next) {
-    // code for token verification – continue on next slides
-    // if token is valid, continue to the specified sensitive route
-    // if token is NOT valid, return error message
     var IdToken = req.body.token;
     admin.auth().verifyIdToken(IdToken)
     .then(function(decodedToken) {
@@ -96,10 +93,11 @@ app.use(function (req, res, next) {
     //     message: "IdToken is successfully verified."
     //   });
       next(); // continue to the sensitive route
-    }).catch(function(error) { // Handle error
+    }).catch(function(err) { // Handle error
       return res.status(403).send({
         success: false,
-        message: 'No/invalid token provided.'
+        message: 'No/invalid token provided.',
+        err: err
       });
     });
 });
