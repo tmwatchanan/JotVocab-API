@@ -41,10 +41,10 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // Firebase- Admin
 // console.log(process.env);
 // Remote (Heroku's config vars)
-// var serviceAccount = JSON.parse(process.env.serviceAccount);
+var serviceAccount = JSON.parse(process.env.serviceAccount);
 // Local
 // var serviceAccount = require('./configs/jotvocab-firebase-adminsdk-6anlk-954de5add9.json');
-var serviceACcount = require('./configs/jotvocab-firebase-adminsdk-6anlk-954de5add9.json') || JSON.parse(process.env.serviceAccount);
+var serviceACcount = JSON.parse(process.env.serviceAccount) || require('./configs/jotvocab-firebase-adminsdk-6anlk-954de5add9.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://jotvocab.firebaseio.com"
