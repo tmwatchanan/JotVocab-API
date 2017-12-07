@@ -5,12 +5,14 @@ The JotVocab back-end API, deployed at http://jotvocab-api.herokuapp.com. The fr
 You can try to send a request to https://jotvocab-api.herokuapp.com/ deployed to Heroku.
 
 > **User's Vocabulary**
->+ <ins>GET</ins> [/vocab/all](https://jotvocab-api.herokuapp.com/vocab/all) - to retrieve all vocabularies from all users
+>+ **<ins>GET</ins>** [/vocab/all](https://jotvocab-api.herokuapp.com/vocab/all) - to retrieve all vocabularies from all users
 >   + *for example, http://jotvocab-api.herokuapp.com/vocab/all*
->+ <ins>POST</ins> [/vocab/user/list](https://jotvocab-api.herokuapp.com/vocab/user/list)/:uid - to retrieve all saved words of the user's
+>+ **<ins>POST</ins>** [/vocab/user/list](https://jotvocab-api.herokuapp.com/vocab/user/list) - to retrieve all saved words of the user's
 >   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/list* with *token* in the request body
->+ <ins>POST</ins> [/vocab/user/add](https://jotvocab-api.herokuapp.com/vocab/user/add)/:uid - to append a new word the user's vocab list
+>+ **<ins>POST</ins>** [/vocab/user/add](https://jotvocab-api.herokuapp.com/vocab/user/add) - to append a new word (you want to add) the user's vocab list
 >   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/add* with *token*, *word* and *definition* in the request body
+>+ **<ins>DELETE</ins>** [/vocab/user/delete](https://jotvocab-api.herokuapp.com/vocab/user/delete) - to append a new word the user's vocab list
+>   + *for example, http://jotvocab-api.herokuapp.com/vocab/user/delete* with *token* and *word* (you want to delete) in the request body
 
 > **Thai Dictionary**
 >+ <ins>GET</ins>
