@@ -28,6 +28,7 @@ exports.addNewWord = function (req, res) {
         }
         var newWord = {
             word: req.body.word,
+            definition: red.body.definition,
             comment: req.body.comment,
             timestamp: Date.now()
         };
