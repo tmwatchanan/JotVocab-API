@@ -57,18 +57,6 @@ exports.addNewWord = function (req, res) {
     });
 };
 
-// exports.addNewWord = function (req, res) {
-//     User.findByIdAndUpdate(
-//         // info._id,
-//         req.body.uid,
-//         { $push: { "words": { word: req.body.word, comment: req.body.comment } } },
-//         { safe: true, upsert: true, new: true },
-//         function (err, model) {
-//             console.log(err);
-//         }
-//     );
-// };
-
 exports.getVocabs = function (req, res) {
     Vocab.find((err, vocabs) => { // Define what to do
         if (err) throw err; // when query finished.
@@ -78,11 +66,11 @@ exports.getVocabs = function (req, res) {
 
 exports.getVocabsByUid = function (req, res) {
     Vocab.find({
-        uid: req.params.uid
+        uid: req.uid
     }, (err, vocabs) => {
         // if (err) throw err;
         if (err) {
-            var errMsg = '[uid:' + req.params.uid + '] vocabs not found!';
+            var errMsg = '[uid:' + req.uid + '] vocabs not found!';
             return res.status(404).json({ // if not found, return
                 success: false, // an error message
                 message: errMsg,

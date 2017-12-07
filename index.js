@@ -92,6 +92,7 @@ app.use(function (req, res, next) {
     //     success: true,
     //     message: "IdToken is successfully verified."
     //   });
+      req.uid = uid;
       next(); // continue to the sensitive route
     }).catch(function(err) { // Handle error
       return res.status(403).send({
@@ -102,7 +103,7 @@ app.use(function (req, res, next) {
     });
 });
 
-app.post('/vocabs/:uid', function (req, res) {
+app.post('/vocabs', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
 })
 
