@@ -84,18 +84,18 @@ exports.getVocabsByUid = function (req, res) {
     var uid = res.locals.uid;
     Vocab.find({
         uid: uid
-    }, (err, vocabs) => {
+    }, (err, userObject) => {
         // if (err) throw err;
         if (err) {
-            var errMsg = '[uid:' + uid + '] vocabs not found!';
-            return res.status(404).json({ // if not found, return
-                success: false, // an error message
+            var errMsg = '[uid:' + uid + '] userObject not found!';
+            return res.status(404).json({
+                success: false,
                 message: errMsg,
                 err: err
             });
         } else {
-            if (vocabs && vocabs.length != 0) { // check an user's vocabs is found
-                return res.json(vocabs);
+            if (userObject && userObject.length != 0) { // check an userObject is found
+                return res.json(userObject[0]); // return only the first only one
             }
         }
     });
@@ -117,6 +117,29 @@ exports.deleteVocabByUid = function (req, res) {
                 success: true,
                 message: successfulMessage,
             });
+        }
+    });
+}
+
+exports.randomVocabByUid = function (req, res) {
+    var uid = res.locals.uid;
+    Vocab.find({
+        uid: uid
+    }, (err, userObject) => {
+        // if (err) throw err;
+        if (err) {
+            var errMsg = '[uid:' + uid + '] userObject not found!';
+            return res.status(404).json({ // if not found, return
+                success: false, // an error message
+                message: errMsg,
+                err: err
+            });
+        } else {
+            if (userObject && userObject.length != 0) { // check an userObject is found
+                var randomIndex = Math.floor((Math.random() * userObject[0].words.length));
+                var randomWord = userObject[0].words[randomIndex];
+                return res.json(randomWord);
+            }
         }
     });
 }
