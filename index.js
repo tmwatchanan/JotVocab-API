@@ -103,14 +103,14 @@ app.use(function (req, res, next) {
     });
 });
 
-app.post('/vocab/list', function (req, res) {
+app.post('/vocab', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
 })
 
-app.post('/vocab/add', function (req, res) {
+app.post('/vocab', function (req, res) {
     Vocabs.addNewWord(req, res);
 });
 
-app.delete('/vocab/delete', function (req, res) {
+app.delete('/vocab', function (req, res) {
     Vocabs.deleteVocabByUid(req, res);
 });
