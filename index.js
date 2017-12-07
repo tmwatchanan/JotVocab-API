@@ -103,7 +103,7 @@ app.use(function (req, res, next) {
     });
 });
 
-app.post('/vocab', function (req, res) {
+app.post('/vocab/user', function (req, res) {
     Vocabs.getVocabsByUid(req, res);
 })
 
