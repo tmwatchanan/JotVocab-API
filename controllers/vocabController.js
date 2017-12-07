@@ -103,7 +103,7 @@ exports.getVocabsByUid = function (req, res) {
 
 exports.deleteVocabByUid = function (req, res) {
     var uid = res.locals.uid;
-    Vocab.update({ uid: uid }, { "$pull": { "words": { "word": req.body.word } }}, { safe: true, multi:true }, function(err, vocab) {
+    Vocab.update({ uid: uid }, { "$pull": { "words": { "word": req.body.word, "definition": req.body.definition } }}, { safe: true, multi:true }, function(err, vocab) {
         if (err) {
             var errMsg = '[uid:' + uid + '] deleting \'' + req.body.word + '\' ERROR!';
             return res.status(404).json({ // if not found, return
